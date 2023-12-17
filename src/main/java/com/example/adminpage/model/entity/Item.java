@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"orderDetails", "partnerCompany"})
 public class Item {
 
     @Id
@@ -41,6 +44,11 @@ public class Item {
 
     private String updatedBy;
 
-    private Long partnerCompanyId;
+    // Item N : 1 Partner
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PartnerCompany partnerCompany;
 
+    // Item 1 : N OrderDetail
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    private List<OrderDetail> orderDetails;
 }

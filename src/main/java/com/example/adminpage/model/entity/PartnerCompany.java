@@ -1,19 +1,19 @@
 package com.example.adminpage.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"items", "category"})
 public class PartnerCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +44,12 @@ public class PartnerCompany {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
-    private Long categoryId;
+
+    // Partner 1 : N Item
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partnerCompany")
+    private List<Item> items;
+
+    // Partner N : 1 Category
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 }

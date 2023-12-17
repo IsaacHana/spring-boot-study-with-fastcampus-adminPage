@@ -8,12 +8,13 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(exclude = {"user"})
+@ToString(exclude = {"user", "orderDetails"})
 public class OrderGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,4 +50,8 @@ public class OrderGroup {
     // XXXToOne으로 시작은 default fetch가 EAGER이다.
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    // OrderGroup 1 : N OrderDetail
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderGroup")
+    private List<OrderDetail> orderDetails;
 }
