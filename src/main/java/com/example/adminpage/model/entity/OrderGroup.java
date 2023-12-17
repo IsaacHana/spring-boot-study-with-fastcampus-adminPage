@@ -46,6 +46,7 @@ public class OrderGroup {
     private String updatedBy;
 
     // OrderGroup N : 1 User
-    @ManyToOne
+    // XXXToOne으로 시작은 default fetch가 EAGER이다.
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 }
