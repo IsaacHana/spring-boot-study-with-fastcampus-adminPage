@@ -29,9 +29,9 @@ public class Item {
 
     private String brandName;
 
-    private LocalDateTime registered;
+    private LocalDateTime registeredAt;
 
-    private LocalDateTime unregistered;
+    private LocalDateTime unregisteredAt;
 
     private LocalDateTime createdAt;
 

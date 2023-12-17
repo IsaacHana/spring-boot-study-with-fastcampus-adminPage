@@ -33,9 +33,9 @@ public class PartnerCompany {
 
     private String ceoName;
 
-    private LocalDateTime registered;
+    private LocalDateTime registeredAt;
 
-    private LocalDateTime unregistered;
+    private LocalDateTime unregisteredAt;
 
     private LocalDateTime createdAt;
 
