@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString(exclude = {"orderGroups"})
 // @Table(name = "user") 클래스 이름과 테이블 이름이 동일하면 자동 변환 아닐 경우 이러한 방식으로 명시적 변환 가능
 public class User {
     @Id
@@ -40,6 +42,10 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    // User 1 : N OrderGroup
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderGroup> orderGroups;
 
     // 1 : N
     // LAZY = 지연 로딩

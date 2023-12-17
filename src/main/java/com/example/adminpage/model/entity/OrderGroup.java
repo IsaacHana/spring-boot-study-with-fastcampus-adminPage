@@ -1,12 +1,10 @@
 package com.example.adminpage.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"user"})
 public class OrderGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +45,7 @@ public class OrderGroup {
 
     private String updatedBy;
 
-    private Long userId;
+    // OrderGroup N : 1 User
+    @ManyToOne
+    private User user;
 }
