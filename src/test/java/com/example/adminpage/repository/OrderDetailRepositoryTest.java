@@ -1,13 +1,13 @@
 package com.example.adminpage.repository;
 
 import com.example.adminpage.AdminPageApplicationTests;
-import com.example.adminpage.model.entity.Item;
 import com.example.adminpage.model.entity.OrderDetail;
-import com.example.adminpage.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -15,26 +15,27 @@ public class OrderDetailRepositoryTest extends AdminPageApplicationTests {
 
     @Autowired
     private OrderDetailRepository orderDetailRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    ItemRepository itemRepository;
 
     @Test
     public void create() {
-
         OrderDetail orderDetail = new OrderDetail();
-        Optional<User> user = userRepository.findById(1L);
-        Optional<Item> item = itemRepository.findById(1L);
 
-        orderDetail.setOrderAt(LocalDateTime.now());
-        // 누가
-        user.ifPresent(orderDetail::setUser);
-        // 어떤 상품
-        item.ifPresent(orderDetail::setItem);
+        orderDetail.setStatus("WAITING");
+        orderDetail.setArrivalDate(LocalDate.now().plusDays(2));
+        orderDetail.setQuantity(1);
+        orderDetail.setTotalPrice(BigDecimal.valueOf(900_000)); // double 보단 BigDecimal 이 깔끔, 값의 엄청난 정확도가 요구 되는 것이 아니라면..
+        orderDetail.setCreatedAt(LocalDateTime.now());
+        orderDetail.setCreatedBy("AdminServer");
+        orderDetail.setItemId(1L);
+        orderDetail.setOrderGroupId(1L);
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
-
         Assertions.assertNotNull(newOrderDetail);
+    }
+
+    @Test
+    public void read() {
+        Optional<OrderDetail> orderDetail = orderDetailRepository.findById(1L);
+        Assertions.assertTrue(orderDetail.isPresent());
     }
 }
