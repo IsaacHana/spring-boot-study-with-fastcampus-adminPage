@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -29,7 +30,9 @@ public class OrderGroup {
 
     private String paymentType;
 
-    private Double totalPrice;
+    private BigDecimal totalPrice;
+
+    private Integer totalQuantity;
 
     private LocalDateTime orderAt;
 
@@ -42,4 +45,6 @@ public class OrderGroup {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    private Long userId;
 }

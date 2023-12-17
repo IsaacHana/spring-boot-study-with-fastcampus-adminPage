@@ -41,4 +41,6 @@ public class Item {
 
     private String updatedBy;
 
+    private Long partnerCompanyId;
+
 }
