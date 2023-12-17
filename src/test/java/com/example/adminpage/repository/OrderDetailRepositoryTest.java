@@ -26,8 +26,8 @@ public class OrderDetailRepositoryTest extends AdminPageApplicationTests {
         orderDetail.setTotalPrice(BigDecimal.valueOf(900_000)); // double 보단 BigDecimal 이 깔끔, 값의 엄청난 정확도가 요구 되는 것이 아니라면..
         orderDetail.setCreatedAt(LocalDateTime.now());
         orderDetail.setCreatedBy("AdminServer");
-        orderDetail.setItemId(1L);
-        orderDetail.setOrderGroupId(1L);
+//        orderDetail.setItemId(1L); Long -> Item
+//        orderDetail.setOrderGroupId(1L); // Long -> OrderGroup
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
         Assertions.assertNotNull(newOrderDetail);

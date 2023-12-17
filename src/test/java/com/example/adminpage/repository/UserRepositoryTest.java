@@ -63,14 +63,25 @@ public class UserRepositoryTest extends AdminPageApplicationTests {
             Assertions.assertEquals(selectUser.getPhoneNumber(), phoneNumber);
 
             selectUser.getOrderGroups().forEach(orderGroup -> {
+                System.out.println("-------------주문 묶음--------------");
                 System.out.println("수령인 : " + orderGroup.getRevName());
                 System.out.println("수령지 : " + orderGroup.getRevAddress());
                 System.out.println("총금액 : " + orderGroup.getTotalPrice());
                 System.out.println("총수량 : " + orderGroup.getTotalQuantity());
+
+                System.out.println("-------------주문 상세--------------");
+                orderGroup.getOrderDetails().forEach(orderDetail -> {
+                    System.out.println("파트너사 이름 : " + orderDetail.getItem().getPartnerCompany().getName());
+                    System.out.println("파트너사 카테고리 : " + orderDetail.getItem().getPartnerCompany().getCategory().getTitle());
+
+                    System.out.println("주문 상품 : " + orderDetail.getItem().getName());
+                    System.out.println("주문 상품 : " + orderDetail.getItem().getPartnerCompany().getCallCenter());
+
+                    System.out.println("주문의 상태 : " + orderDetail.getStatus());
+                    System.out.println("도착 예정 일자 : " + orderDetail.getArrivalDate());
+                });
             });
         });
-
-        Assertions.assertNotNull(user);
     }
 
     @Test
