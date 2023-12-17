@@ -48,13 +48,28 @@ public class UserRepositoryTest extends AdminPageApplicationTests {
     }
 
     @Test
+    @Transactional
     public void read() {
         // select *
         // from user u1_0
         // where u1_0.phone_number=?
         // order by u1_0.id desc limit ?
+        String phoneNumber = "010-1111-2222";
+        Optional<User> user = userRepository.findFirstByPhoneNumberOrderByIdDesc(phoneNumber);
 
-        User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+        Assertions.assertTrue(user.isPresent());
+
+        user.ifPresent(selectUser -> {
+            Assertions.assertEquals(selectUser.getPhoneNumber(), phoneNumber);
+
+            selectUser.getOrderGroups().forEach(orderGroup -> {
+                System.out.println("수령인 : " + orderGroup.getRevName());
+                System.out.println("수령지 : " + orderGroup.getRevAddress());
+                System.out.println("총금액 : " + orderGroup.getTotalPrice());
+                System.out.println("총수량 : " + orderGroup.getTotalQuantity());
+            });
+        });
+
         Assertions.assertNotNull(user);
     }
 
