@@ -21,9 +21,17 @@ public class User {
     //    @Column(name = "account") 명시적 맵핑
     private String account;
 
+    private String password;
+
+    private String status;
+
     private String email;
 
     private String phoneNumber;
+
+    private LocalDateTime registeredAt;
+
+    private LocalDateTime unregisteredAt;
 
     private LocalDateTime createdAt;
 
@@ -32,7 +40,6 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
-
 
     // 1 : N
     // LAZY = 지연 로딩
@@ -53,6 +60,6 @@ public class User {
 
     // oneToOnt , manyToOne 의 default
     // mappedBy 는 OrderDetail 클래스안에 user에 매칭 시킨다는 뜻
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private List<OrderDetail> orderDetailList;
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+//    private List<OrderDetail> orderDetailList;
 }

@@ -1,33 +1,41 @@
 package com.example.adminpage.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@ToString(exclude = {"user", "item"})
-public class OrderDetail {
+public class PartnerCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     private String status;
 
-    private LocalDateTime arrivalDate;
+    private String address;
 
-    private Integer quantity;
+    private String callCenter;
 
-    private BigDecimal totalPrice;
+    private String partnerNumber;
 
-    private LocalDateTime orderAt;
+    private String businessNumber;
+
+    private String ceoName;
+
+    private LocalDateTime registered;
+
+    private LocalDateTime unregistered;
 
     private LocalDateTime createdAt;
 
@@ -36,11 +44,4 @@ public class OrderDetail {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
-//    // N : 1
-//    @ManyToOne
-//    private User user; // hibernate 에서 알아서 user_id를 찾아서 매칭 시킴
-//
-//    // N : 1
-//    @ManyToOne
-//    private Item item;
 }
