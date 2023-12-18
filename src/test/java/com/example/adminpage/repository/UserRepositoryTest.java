@@ -29,15 +29,7 @@ public class UserRepositoryTest extends AdminPageApplicationTests {
         LocalDateTime createdAt = LocalDateTime.now();
         String createdBy = "AdminServer";
 
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(password);
-        user.setStatus(status);
-        user.setEmail(email);
-        user.setPhoneNumber(phoneNumber);
-        user.setRegisteredAt(registeredAt);
-        user.setCreatedAt(createdAt);
-        user.setCreatedBy(createdBy);
+        User user = User.builder().account(account).password(password).status(status).email(email).build();
 
         // insert into user (account,created_at,created_by,email,password,phone_number,registered_at,status,unregistered_at,updated_at,updated_by)
         // values (?,?,?,?,?,?,?,?,?,?,?);
@@ -86,12 +78,18 @@ public class UserRepositoryTest extends AdminPageApplicationTests {
 
     @Test
     public void update() {
-        Optional<User> user = userRepository.findById(2L);
+        Optional<User> user = userRepository.findById(1L);
 
         user.ifPresent(selectUser -> {
+            // 자바 빈 패턴
             selectUser.setAccount("pppp");
             selectUser.setUpdatedAt(LocalDateTime.now());
             selectUser.setUpdatedBy("update method()");
+
+            // chaining 으로 깔끔하게 표현
+            selectUser.setAccount("aaaa")
+                    .setUpdatedAt(LocalDateTime.now())
+                    .setUpdatedBy("update method()");
 
             userRepository.save(selectUser);
         });

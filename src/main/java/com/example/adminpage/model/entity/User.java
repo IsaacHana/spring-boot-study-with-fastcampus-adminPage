@@ -1,10 +1,8 @@
 package com.example.adminpage.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,6 +18,8 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @ToString(exclude = {"orderGroups"})
+@Builder
+@Accessors(chain = true)
 // @Table(name = "user") 클래스 이름과 테이블 이름이 동일하면 자동 변환 아닐 경우 이러한 방식으로 명시적 변환 가능
 public class User {
     @Id
