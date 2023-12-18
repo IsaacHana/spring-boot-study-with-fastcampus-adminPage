@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @ToString(exclude = {"orderDetails", "partnerCompany"})
 public class Item {
 
@@ -36,12 +42,16 @@ public class Item {
 
     private LocalDateTime unregisteredAt;
 
+    @CreatedDate // 등록일
     private LocalDateTime createdAt;
 
+    @CreatedBy // 등록자
     private String createdBy;
 
+    @LastModifiedDate // 수정일
     private LocalDateTime updatedAt;
 
+    @LastModifiedBy // 수정자
     private String updatedBy;
 
     // Item N : 1 Partner

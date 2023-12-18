@@ -1,12 +1,14 @@
 package com.example.adminpage.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class) // 리스너 지정
 public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,11 +40,15 @@ public class AdminUser {
 
     private LocalDateTime unregisteredAt;
 
+    @CreatedDate // 등록일
     private LocalDateTime createdAt;
 
+    @CreatedBy // 등록자
     private String createdBy;
 
+    @LastModifiedDate // 수정일
     private LocalDateTime updatedAt;
 
+    @LastModifiedBy // 수정자
     private String updatedBy;
 }
