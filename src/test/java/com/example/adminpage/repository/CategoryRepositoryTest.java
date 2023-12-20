@@ -2,7 +2,6 @@ package com.example.adminpage.repository;
 
 import com.example.adminpage.AdminPageApplicationTests;
 import com.example.adminpage.model.entity.Category;
-import com.example.adminpage.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
