@@ -1,13 +1,11 @@
 package com.example.adminpage.repository;
 
 import com.example.adminpage.AdminPageApplicationTests;
-import com.example.adminpage.model.entity.Item;
 import com.example.adminpage.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import java.time.LocalDateTime;
 import java.util.Optional;
