@@ -39,6 +39,8 @@ public class User {
 
     private LocalDateTime registeredAt;
 
+    private LocalDateTime unregisteredAt;
+
     @CreatedDate // 등록일
     private LocalDateTime createdAt;
 
