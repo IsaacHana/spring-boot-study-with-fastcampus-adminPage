@@ -1,6 +1,7 @@
 package com.example.adminpage.controller;
 
 import com.example.adminpage.model.SearchParam;
+import com.example.adminpage.model.network.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,7 +10,6 @@ public class GetController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/getMethod") // localhost:8080/api/getMethod
     public String getRequest() {
-
         return "Hi getMethod";
     }
 
@@ -34,5 +34,14 @@ public class GetController {
         // { "account" : "", "email" : "", "page" : 0 }
         // SpringBoot 에서 jackson 이라는 라이브러리를 통해 클래스 보고 json으로 변환시켜준다.
         return searchParam;
+    }
+
+    @GetMapping("header")
+    public Header getHeader() {
+        // expected : {"resultCode" : "OK" , "description" : "OK"}
+        return Header.builder()
+                .resultCode("OK")
+                .description("OK")
+                .build();
     }
 }
