@@ -2,12 +2,12 @@ package com.example.adminpage.ifs;
 
 import com.example.adminpage.model.network.Header;
 
-public interface CrudInterface {
-    Header create(); // TODO : request object 추가
+public interface CrudInterface<Req, Res> {
+    Header<Res> create(Header<Req> request); // TODO: 제네릭 타입 공부하기
 
-    Header read(Long id);
+    Header<Res> read(Long id);
 
-    Header update();
+    Header<Res> update(Header<Req> request);
 
-    Header delete(Long id);
+    Header<Res> delete(Long id);
 }
