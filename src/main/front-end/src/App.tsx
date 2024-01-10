@@ -9,7 +9,7 @@ import Layout from "./layout";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
