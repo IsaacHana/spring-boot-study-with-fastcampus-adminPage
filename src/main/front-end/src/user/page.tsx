@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { fetchUsers } from "../api/userApi";
 
 interface PaginationProps {
