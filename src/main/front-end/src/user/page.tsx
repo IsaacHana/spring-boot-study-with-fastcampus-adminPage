@@ -61,19 +61,18 @@ const Page = () => {
   }, [paginationStatus.current_elements]);
 
   return (
-    <div className="flex flex-col m-4">
-      <div className="flex flex-row align-middle">
-        <div className="text-xl">사용자 관리</div>
-        <div className="">회원 관리</div>
+    <div className="flex flex-col p-4">
+      <div className="flex flex-row align-middle gap-4 mb-2">
+        <div className="text-xl text-white">사용자 관리</div>
+        <div className="text-white/60">회원 관리</div>
       </div>
       {users ? (
         <>
           <div className="relative overflow-x-auto shadow-md rounded-lg">
-            결과
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-lg">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-3 text-middle">
                     id
                   </th>
                   <th scope="col" className="px-6 py-3">
@@ -98,14 +97,20 @@ const Page = () => {
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td>{user.id}</td>
-                    <td>{user.account}</td>
-                    <td>{user.status}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone_number}</td>
-                    <td>{user.registered_at}</td>
-                    <td>{user.unregistered_at}</td>
+                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:opacity-80 transition-all hover:text-stone-200">
+                    <td className="text-middle px-6 py-4">{user.id}</td>
+                    <td className="text-middle px-6 py-4">{user.account}</td>
+                    <td className="text-middle px-6 py-4">{user.status}</td>
+                    <td className="text-middle px-6 py-4">{user.email}</td>
+                    <td className="text-middle px-6 py-4">
+                      {user.phone_number}
+                    </td>
+                    <td className="text-middle px-6 py-4">
+                      {user.registered_at}
+                    </td>
+                    <td className="text-middle px-6 py-4">
+                      {user.unregistered_at}
+                    </td>
                   </tr>
                 ))}
               </tbody>
