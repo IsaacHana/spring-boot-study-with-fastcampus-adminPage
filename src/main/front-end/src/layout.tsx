@@ -1,14 +1,29 @@
+import { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const [isExpended, setIsExpended] = useState<boolean>(false);
+
+  const handleExpendsion = () => {
+    setIsExpended((preProps) => {
+      return !preProps;
+    });
+  };
+
   return (
     <div className="h-full">
       <Header />
-      <div className="hidden md:flex mt-16 w-20 flex-col fixed inset-y-0">
-        <Sidebar />
+      <div
+        className={`mt-16 ${
+          isExpended ? "w-52" : "w-16"
+        } flex flex-col fixed inset-y-0`}
+      >
+        <Sidebar isExpenped={isExpended} onClickExpension={handleExpendsion} />
       </div>
-      <main className="md:pl-20 pt-16 h-full">{children}</main>
+      <main className={`${isExpended ? "pl-52" : "pl-16 "} pt-16 h-full`}>
+        {children}
+      </main>
     </div>
   );
 };
