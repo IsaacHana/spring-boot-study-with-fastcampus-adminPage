@@ -2,11 +2,16 @@ package com.example.adminpage.service;
 
 import com.example.adminpage.model.entity.Item;
 import com.example.adminpage.model.network.Header;
+import com.example.adminpage.model.network.Pagination;
 import com.example.adminpage.model.network.request.ItemApiRequest;
 import com.example.adminpage.model.network.response.ItemApiResponse;
 import com.example.adminpage.repository.PartnerCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResponse, Item> {
@@ -78,6 +83,23 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
+    public Header<List<ItemApiResponse>> search(Pageable pageable) {
+        Page<Item> items = baseRepository.findAll(pageable);
+
+        List<ItemApiResponse> itemApiResponses = items.stream()
+                .map(this::response)
+                .toList();
+
+        Pagination pagination = Pagination.builder()
+                .totalPages(items.getTotalPages())
+                .totalElements(items.getTotalElements())
+                .currentPage(items.getNumberOfElements())
+                .currentElements(items.getNumber())
+                .build();
+
+        return Header.OK(itemApiResponses, pagination);
+    }
+
     public ItemApiResponse response(Item item) {
         return ItemApiResponse.builder()
                 .id(item.getId())
@@ -92,4 +114,6 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .partnerId(item.getPartnerCompany().getId())
                 .build();
     }
+
+
 }
