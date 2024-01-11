@@ -6,6 +6,7 @@ import User from "./user/user";
 
 import { Route, Routes } from "react-router-dom";
 import Layout from "./layout";
+import Items from "./items/items";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user" element={<User />} />
+          <Route path="/item" element={<Items />} />
         </Routes>
       </Layout>
     </div>
