@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import SelectBox from "../ui/SelectBox";
 
 interface PaginationProps {
   pagination: {
@@ -17,7 +16,6 @@ const Pagination: React.FC<PaginationProps> = ({
   const { total_elements, total_pages, current_elements } = pagination;
   const pageCount = 5;
 
-  useEffect(() => {}, []);
   const [pageGroup, setPageGroup] = useState<number>(1);
 
   useEffect(() => {
@@ -60,10 +58,6 @@ const Pagination: React.FC<PaginationProps> = ({
     return arr;
   };
 
-  const sectionView = () => {
-    let arr = [10, 20, 50];
-    return arr;
-  };
   return (
     <div className="flex flex-row gap-x-3 my-2 justify-center align-middle text-stone-200 ">
       <div></div>
