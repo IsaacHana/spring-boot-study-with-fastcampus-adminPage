@@ -36,6 +36,19 @@ export interface Partner {
   category_id: number;
 }
 
+export interface OrderGroup {
+  id: number;
+  status: string;
+  order_type: string;
+  rev_address: string;
+  rev_name: string;
+  payment_type: string;
+  total_price: number;
+  total_quantity: number;
+  order_at: string;
+  arrival_date: string;
+}
+
 export interface PaginationProps {
   total_pages: number;
   total_elements: number;
