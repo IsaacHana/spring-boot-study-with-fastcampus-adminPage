@@ -6,20 +6,34 @@ export interface User {
   email: string;
   phone_number: string;
   registered_at: string;
-  unregistered_at: string;
+  unregistered_at: string | null;
   order_group_api_responses: [];
 }
 
 export interface Item {
   id: number;
-  account: string;
-  password: string;
   status: string;
-  email: string;
-  phone_number: string;
+  name: string;
+  title: string;
+  content: string;
+  price: number;
+  brand_name: string;
+  registered_at: string;
+  unregistered_at: string | null;
+  partner_id: number;
+}
+
+export interface Partner {
+  id: number;
+  name: string;
+  address: string;
+  call_number: string;
+  partner_number: string;
+  business_number: string;
+  ceo_name: string;
   registered_at: string;
   unregistered_at: string;
-  order_group_api_responses: [];
+  category_id: number;
 }
 
 export interface PaginationProps {
