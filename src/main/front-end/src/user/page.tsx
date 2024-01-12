@@ -5,7 +5,7 @@ import TableView from "../components/TableView";
 import { PaginationProps, User } from "../model/UserModel";
 
 const Page = () => {
-  const [isFetching, setIsFetching] = useState<boolean>();
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
   const [paginationStatus, setPagination] = useState<PaginationProps>({
@@ -13,6 +13,7 @@ const Page = () => {
     total_elements: 0,
     current_page: 0,
     current_elements: 0,
+    current_size: 0,
   });
   const [users, setUsers] = useState<User[] | null>(null);
 
@@ -27,11 +28,11 @@ const Page = () => {
     });
   };
 
-  const onChangeCurrentPage = (e: number) => {
+  const onChangePageSize = (e: number) => {
     if (isFetching) return;
 
     setPagination((prevState) => {
-      return { ...prevState, current_page: e };
+      return { ...prevState, current_size: e };
     });
   };
 
@@ -41,7 +42,7 @@ const Page = () => {
       try {
         const { data, pagination } = await fetchUsers(
           paginationStatus.current_elements,
-          paginationStatus.current_page
+          paginationStatus.current_size
         );
 
         setUsers(data);
@@ -61,7 +62,7 @@ const Page = () => {
     if (!isFetching) {
       fetchData();
     }
-  }, [paginationStatus.current_elements, paginationStatus.current_page]);
+  }, [paginationStatus.current_elements, paginationStatus.current_size]);
 
   if (error) {
     return <ErrorPage title="에러 발생!" description={error.message} />;
@@ -70,12 +71,31 @@ const Page = () => {
   return (
     <>
       <TableView
-        onChangeCurrentPage={onChangeCurrentPage}
+        onChangePageSize={onChangePageSize}
         onChangeCurrentElement={onChangeCurrentElement}
         data={users}
         pagination={paginationStatus}
+        isLoading={isFetching}
         title="사용자 관리"
         description="회원 관리"
+        keys={[
+          "id",
+          "account",
+          "status",
+          "email",
+          "phone_number",
+          "registered_at",
+          "unregistered_at",
+        ]}
+        tableHeads={[
+          "id",
+          "계정",
+          "상태",
+          "이메일",
+          "전화번호",
+          "등록일",
+          "해지일",
+        ]}
       />
     </>
   );
