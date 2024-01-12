@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchUsers } from "../api/userApi";
 import ErrorPage from "../components/ErrorPage";
 import TableView from "../components/TableView";
-import { PaginationProps, User } from "../model/UserModel";
+import { PaginationProps, User } from "../model/model";
 
 const Page = () => {
   const [isFetching, setIsFetching] = useState<boolean>(false);
