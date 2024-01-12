@@ -2,9 +2,14 @@ package com.example.adminpage.service;
 
 import com.example.adminpage.model.entity.PartnerCompany;
 import com.example.adminpage.model.network.Header;
+import com.example.adminpage.model.network.Pagination;
 import com.example.adminpage.model.network.request.PartnerApiRequest;
 import com.example.adminpage.model.network.response.PartnerApiResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PartnerApiLogicService extends BaseService<PartnerApiRequest, PartnerApiResponse, PartnerCompany> {
@@ -16,7 +21,7 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
     @Override
     public Header<PartnerApiResponse> read(Long id) {
         return baseRepository.findById(id)
-                .map(partnerCompany -> response(partnerCompany))
+                .map(partnerCompany -> Header.OK(response(partnerCompany)))
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -30,8 +35,8 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
         return null;
     }
 
-    private Header<PartnerApiResponse> response(PartnerCompany partnerCompany) {
-        PartnerApiResponse body = PartnerApiResponse.builder()
+    private PartnerApiResponse response(PartnerCompany partnerCompany) {
+        return PartnerApiResponse.builder()
                 .id(partnerCompany.getId())
                 .name(partnerCompany.getName())
                 .status(partnerCompany.getStatus())
@@ -44,7 +49,23 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
                 .unregisteredAt(partnerCompany.getUnregisteredAt())
                 .categoryId(partnerCompany.getId())
                 .build();
+    }
 
-        return Header.OK(body);
+    public Header<List<PartnerApiResponse>> search(Pageable pageable) {
+        Page<PartnerCompany> partnerCompanies = baseRepository.findAll(pageable);
+
+        List<PartnerApiResponse> partnerApiResponses = partnerCompanies.stream()
+                .map(this::response)
+                .toList();
+
+        Pagination pagination = Pagination.builder()
+                .totalPages(partnerCompanies.getTotalPages())
+                .totalElements(partnerCompanies.getTotalElements())
+                .currentPage(partnerCompanies.getNumberOfElements())
+                .currentElements(partnerCompanies.getNumber())
+                .currentSize(partnerCompanies.getSize())
+                .build();
+
+        return Header.OK(partnerApiResponses, pagination);
     }
 }
