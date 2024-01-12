@@ -95,6 +95,7 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .totalElements(items.getTotalElements())
                 .currentPage(items.getNumberOfElements())
                 .currentElements(items.getNumber())
+                .currentSize(items.getSize())
                 .build();
 
         return Header.OK(itemApiResponses, pagination);

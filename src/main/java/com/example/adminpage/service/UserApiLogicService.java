@@ -130,6 +130,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .totalElements(users.getTotalElements())
                 .currentElements(users.getNumber())
                 .currentPage(users.getNumberOfElements())
+                .currentSize(users.getSize())
                 .build();
 
         return Header.OK(userApiResponses, pagination);
