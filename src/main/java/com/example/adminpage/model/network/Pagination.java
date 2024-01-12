@@ -17,5 +17,5 @@ public class Pagination {
     private Long totalElements;
     private Integer currentPage;
     private Integer currentElements;
-    
+    private Integer currentSize;
 }
