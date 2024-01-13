@@ -10,8 +10,6 @@ export const fetchOrderGroup = async (
     `${url}?page=${currentPage}&size=${orderGroupPerPage}`
   );
 
-  console.log(response?.data);
-
   if (response.status != 200) {
     throw new Error(response.data?.description);
   }
