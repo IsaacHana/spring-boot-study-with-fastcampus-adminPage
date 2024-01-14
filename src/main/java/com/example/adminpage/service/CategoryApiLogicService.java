@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CategoryApiLogicService extends BaseService<CategoryApiRequest, CategoryApiResponse, Category> {
 
     @Override
-    public Header<CategoryApiResponse> create(Header<CategoryApiRequest> request) {
+    public Header<CategoryApiResponse> create(CategoryApiRequest request) {
         return null;
     }
 
@@ -20,7 +20,7 @@ public class CategoryApiLogicService extends BaseService<CategoryApiRequest, Cat
     }
 
     @Override
-    public Header<CategoryApiResponse> update(Header<CategoryApiRequest> request) {
+    public Header<CategoryApiResponse> update(CategoryApiRequest request) {
         return null;
     }
 

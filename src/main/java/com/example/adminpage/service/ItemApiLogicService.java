@@ -19,19 +19,17 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
     private PartnerCompanyRepository partnerCompanyRepository;
 
     @Override
-    public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
-
-        ItemApiRequest body = request.getData();
+    public Header<ItemApiResponse> create(ItemApiRequest request) {
 
         Item item = Item.builder()
-                .status(body.getStatus())
-                .name(body.getName())
-                .title(body.getTitle())
-                .content(body.getContent())
-                .price(body.getPrice())
-                .brandName(body.getBrandName())
-                .registeredAt(body.getRegisteredAt())
-                .partnerCompany(partnerCompanyRepository.getReferenceById(body.getPartnerId()))
+                .status(request.getStatus())
+                .name(request.getName())
+                .title(request.getTitle())
+                .content(request.getContent())
+                .price(request.getPrice())
+                .brandName(request.getBrandName())
+                .registeredAt(request.getRegisteredAt())
+                .partnerCompany(partnerCompanyRepository.getReferenceById(request.getPartnerId()))
                 .build();
 
         Item newItem = baseRepository.save(item);
@@ -48,21 +46,19 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
     }
 
     @Override
-    public Header<ItemApiResponse> update(Header<ItemApiRequest> request) {
+    public Header<ItemApiResponse> update(ItemApiRequest request) {
 
-        ItemApiRequest body = request.getData();
-
-        return baseRepository.findById(body.getId())
+        return baseRepository.findById(request.getId())
                 .map(entityItem -> {
                     entityItem
-                            .setStatus(body.getStatus())
-                            .setName(body.getName())
-                            .setTitle(body.getTitle())
-                            .setContent(body.getContent())
-                            .setPrice(body.getPrice())
-                            .setBrandName(body.getBrandName())
-                            .setRegisteredAt(body.getRegisteredAt())
-                            .setUnregisteredAt(body.getUnregisteredAt());
+                            .setStatus(request.getStatus())
+                            .setName(request.getName())
+                            .setTitle(request.getTitle())
+                            .setContent(request.getContent())
+                            .setPrice(request.getPrice())
+                            .setBrandName(request.getBrandName())
+                            .setRegisteredAt(request.getRegisteredAt())
+                            .setUnregisteredAt(request.getUnregisteredAt());
 
                     return entityItem;
                 })

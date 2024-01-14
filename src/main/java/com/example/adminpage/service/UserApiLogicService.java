@@ -12,6 +12,7 @@ import com.example.adminpage.model.network.response.UserApiResponse;
 import com.example.adminpage.model.network.response.UserOrderInfoApiResponse;
 import com.example.adminpage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
@@ -34,17 +36,14 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
     // 2. user 생성
     // 3. 생성된 데이터 -> UserApiResponse return
     @Override
-    public Header<UserApiResponse> create(Header<UserApiRequest> request) {
-        // 1. request data
-        UserApiRequest userApiRequest = request.getData();
-
+    public Header<UserApiResponse> create(UserApiRequest request) {
         // 2. User 생성
         User user = User.builder()
-                .account(userApiRequest.getAccount())
-                .password(userApiRequest.getPassword())
+                .account(request.getAccount())
+                .password(request.getPassword())
                 .status(UserStatus.REGISTERED)
-                .phoneNumber(userApiRequest.getPhoneNumber())
-                .email(userApiRequest.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .email(request.getEmail())
                 .registeredAt(LocalDateTime.now())
                 .build();
 
@@ -63,23 +62,21 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
     }
 
     @Override
-    public Header<UserApiResponse> update(Header<UserApiRequest> request) {
+    public Header<UserApiResponse> update(UserApiRequest request) {
         // 1. data
-        UserApiRequest userApiRequest = request.getData();
-
+        log.info("request : {}", request);
         // 2. id -> user 데이터 찾기
-        Optional<User> optional = baseRepository.findById(userApiRequest.getId());
-
+        Optional<User> optional = baseRepository.findById(request.getId());
 
         return optional.map(user -> {
                     // 3. update
                     // id
-                    user.setAccount(userApiRequest.getAccount())
-                            .setPassword(userApiRequest.getPassword())
-                            .setPhoneNumber(userApiRequest.getPhoneNumber())
-                            .setEmail(userApiRequest.getEmail())
-                            .setRegisteredAt(userApiRequest.getRegisteredAt())
-                            .setUnregisteredAt(userApiRequest.getUnregisteredAt());
+                    user.setAccount(request.getAccount())
+                            .setPassword(request.getPassword())
+                            .setPhoneNumber(request.getPhoneNumber())
+                            .setEmail(request.getEmail())
+                            .setRegisteredAt(request.getRegisteredAt())
+                            .setUnregisteredAt(request.getUnregisteredAt());
                     return user;
                 })
                 .map(user -> baseRepository.save(user)) // update

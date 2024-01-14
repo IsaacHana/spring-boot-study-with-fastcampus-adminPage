@@ -21,19 +21,17 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
     private UserRepository userRepository;
 
     @Override
-    public Header<OrderGroupApiResponse> create(Header<OrderGroupApiRequest> request) {
-        OrderGroupApiRequest body = request.getData();
-
+    public Header<OrderGroupApiResponse> create(OrderGroupApiRequest request) {
         OrderGroup orderGroup = OrderGroup.builder()
-                .status(body.getStatus())
-                .orderType(body.getOrderType())
-                .revAddress(body.getRevAddress())
-                .revName(body.getRevName())
-                .paymentType(body.getPaymentType())
-                .totalPrice(body.getTotalPrice())
-                .totalQuantity(body.getTotalQuantity())
+                .status(request.getStatus())
+                .orderType(request.getOrderType())
+                .revAddress(request.getRevAddress())
+                .revName(request.getRevName())
+                .paymentType(request.getPaymentType())
+                .totalPrice(request.getTotalPrice())
+                .totalQuantity(request.getTotalQuantity())
                 .orderAt(LocalDateTime.now())
-                .user(userRepository.getReferenceById(body.getUserId()))
+                .user(userRepository.getReferenceById(request.getUserId()))
                 .build();
 
         OrderGroup newOrderGroup = baseRepository.save(orderGroup);
@@ -50,23 +48,21 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
     }
 
     @Override
-    public Header<OrderGroupApiResponse> update(Header<OrderGroupApiRequest> request) {
+    public Header<OrderGroupApiResponse> update(OrderGroupApiRequest request) {
 
-        OrderGroupApiRequest body = request.getData();
-
-        return baseRepository.findById(body.getId())
+        return baseRepository.findById(request.getId())
                 .map(orderGroup -> {
                     orderGroup
-                            .setStatus(body.getStatus())
-                            .setOrderType(body.getOrderType())
-                            .setRevAddress(body.getRevAddress())
-                            .setRevName(body.getRevName())
-                            .setPaymentType(body.getPaymentType())
-                            .setTotalPrice(body.getTotalPrice())
-                            .setTotalQuantity(body.getTotalQuantity())
-                            .setOrderAt(body.getOrderAt())
-                            .setArrivalDate(body.getArrivalDate())
-                            .setUser(userRepository.getOne(body.getUserId()))
+                            .setStatus(request.getStatus())
+                            .setOrderType(request.getOrderType())
+                            .setRevAddress(request.getRevAddress())
+                            .setRevName(request.getRevName())
+                            .setPaymentType(request.getPaymentType())
+                            .setTotalPrice(request.getTotalPrice())
+                            .setTotalQuantity(request.getTotalQuantity())
+                            .setOrderAt(request.getOrderAt())
+                            .setArrivalDate(request.getArrivalDate())
+                            .setUser(userRepository.getOne(request.getUserId()))
                     ;
 
                     return orderGroup;
@@ -119,7 +115,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
                 .currentElements(orderGroups.getNumber())
                 .currentSize(orderGroups.getSize())
                 .build();
-        
+
         return Header.OK(orderGroupApiResponses, pagination);
     }
 }
