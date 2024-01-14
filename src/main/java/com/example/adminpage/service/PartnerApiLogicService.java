@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class PartnerApiLogicService extends BaseService<PartnerApiRequest, PartnerApiResponse, PartnerCompany> {
     @Override
-    public Header<PartnerApiResponse> create(Header<PartnerApiRequest> request) {
+    public Header<PartnerApiResponse> create(PartnerApiRequest request) {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
     }
 
     @Override
-    public Header<PartnerApiResponse> update(Header<PartnerApiRequest> request) {
+    public Header<PartnerApiResponse> update(PartnerApiRequest request) {
         return null;
     }
 
