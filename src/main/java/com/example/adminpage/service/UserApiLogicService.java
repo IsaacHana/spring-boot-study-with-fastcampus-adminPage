@@ -157,7 +157,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         // item
         userApiResponse.setOrderGroupApiResponses(orderGroupApiResponses);
         UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
-                .userApiResponse(userApiResponse)
+                .userOrderInfo(userApiResponse)
                 .build();
 
         return Header.OK(userOrderInfoApiResponse);
