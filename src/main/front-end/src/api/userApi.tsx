@@ -16,7 +16,7 @@ export const fetchUsers = async (currentPage: number, itemsPerPage: number) => {
 };
 
 export const fetchUser = async (userId: any) => {
-  const response = await axios.get(`${url}/${userId}`);
+  const response = await axios.get(`${url}/${userId}/orderInfo`);
 
   if (response.status != 200) {
     throw new Error(response.data?.description);
