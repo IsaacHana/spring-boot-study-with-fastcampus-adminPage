@@ -47,6 +47,7 @@ export interface OrderGroup {
   total_quantity: number;
   order_at: string;
   arrival_date: string;
+  item_api_responses: [];
 }
 
 export interface PaginationProps {
