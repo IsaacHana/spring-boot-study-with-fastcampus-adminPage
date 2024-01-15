@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserOrderInfoApiResponse {
 
-    private UserApiResponse userApiResponse;
+    private UserApiResponse userOrderInfo;
 
 }
