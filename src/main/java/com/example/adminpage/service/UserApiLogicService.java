@@ -6,7 +6,7 @@ import com.example.adminpage.model.enumclass.UserStatus;
 import com.example.adminpage.model.network.Header;
 import com.example.adminpage.model.network.Pagination;
 import com.example.adminpage.model.network.request.UserApiRequest;
-import com.example.adminpage.model.network.response.ItemApiResponse;
+import com.example.adminpage.model.network.response.OrderDetailApiResponse;
 import com.example.adminpage.model.network.response.OrderGroupApiResponse;
 import com.example.adminpage.model.network.response.UserApiResponse;
 import com.example.adminpage.model.network.response.UserOrderInfoApiResponse;
@@ -29,6 +29,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
     private final UserRepository userRepository;
 
     private final OrderGroupApiLogicService orderGroupApiLogicService;
+    private final OrderDetailApiLogicService orderDetailApiLogicService;
 
     private final ItemApiLogicService itemApiLogicService;
 
@@ -143,19 +144,17 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         List<OrderGroupApiResponse> orderGroupApiResponses = orderGroups.stream()
                 .map(orderGroup -> {
                             OrderGroupApiResponse orderGroupApiResponse = orderGroupApiLogicService.response(orderGroup);
-                            // item api response
-                            List<ItemApiResponse> itemApiResponses = orderGroup.getOrderDetails().stream()
-                                    .map(detail -> detail.getItem())
-                                    .map(item -> itemApiLogicService.response(item))
-                                    .toList();
+                            // orderDetail api response
+                            List<OrderDetailApiResponse> orderDetailApiResponses = orderGroup.getOrderDetails().stream()
+                                    .map(orderDetail -> orderDetailApiLogicService.response(orderDetail)).toList();
 
-                            orderGroupApiResponse.setItemApiResponses(itemApiResponses);
+                            orderGroupApiResponse.setOrderDetailApiResponses(orderDetailApiResponses);
                             return orderGroupApiResponse;
                         }
                 ).toList();
 
-        // item
         userApiResponse.setOrderGroupApiResponses(orderGroupApiResponses);
+
         UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
                 .userOrderInfo(userApiResponse)
                 .build();
