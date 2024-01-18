@@ -47,7 +47,16 @@ export interface OrderGroup {
   total_quantity: number;
   order_at: string;
   arrival_date: string;
-  item_api_responses: [];
+  order_detail_api_responses: OrderDetail[];
+}
+
+export interface OrderDetail {
+  id: number;
+  status: string;
+  arrival_date: string;
+  quantity: number;
+  total_price: number;
+  item_api_response: Item;
 }
 
 export interface PaginationProps {
