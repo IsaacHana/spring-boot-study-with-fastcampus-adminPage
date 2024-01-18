@@ -22,4 +22,6 @@ public class OrderDetailApiResponse {
     private Integer quantity;
 
     private BigDecimal totalPrice;
+
+    private ItemApiResponse itemApiResponse;
 }
