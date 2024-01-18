@@ -1,9 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [isExpended, setIsExpended] = useState<boolean>(false);
+  const [isExpended, setIsExpended] = useState<boolean>(true);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  const debounce = (func: any, timeout = 200) => {
+    let timer: any;
+    return (...args: any) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  };
+
+  const handleResize = debounce(() => {
+    setWidth(window.innerWidth);
+  }, 300);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    if (width! < 768) setIsExpended(false);
+    return () => {
+      // cleanup
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [width]);
 
   const handleExpendsion = () => {
     setIsExpended((preProps) => {
