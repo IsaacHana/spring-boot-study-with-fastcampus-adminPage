@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { OrderGroup, User } from "../../model/model";
+import { OrderGroup, PaginationProps, User } from "../../model/model";
 import ErrorPage from "../../components/ErrorPage";
 import { fetchUser, updateUser } from "../../api/userApi";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,7 @@ import Loader from "../../components/Loader";
 import Input from "../../ui/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ListingOrderGroup from "../../components/listings/ListingOrderGroup";
+import Pagination from "../../components/Pagination";
 
 const Page = () => {
   const { id } = useParams();
@@ -16,6 +17,13 @@ const Page = () => {
   const [error, setError] = useState<Error>();
 
   const [user, setUser] = useState<User | null>(null);
+  const [paginationStatus, setPaginationStatus] = useState<PaginationProps>({
+    total_pages: 0,
+    total_elements: 0,
+    current_page: 0,
+    current_elements: 0,
+    current_size: 0,
+  });
   const [orderGroups, setOrderGroups] = useState<OrderGroup[] | null>(null);
 
   const {
@@ -53,13 +61,18 @@ const Page = () => {
     const fetchData = async () => {
       setIsFetching(true);
       try {
-        const { data } = await fetchUser(id);
-        // console.log(data);
+        const { data, pagination } = await fetchUser(
+          id,
+          paginationStatus.current_elements
+        );
+
         const user = data.user_order_info;
-        console.log(user);
+
         const { order_group_api_responses } = user;
-        console.log(order_group_api_responses);
+
         setUser(user);
+        setPaginationStatus(pagination);
+
         setOrderGroups(order_group_api_responses);
 
         setIsFetching(false);
@@ -76,7 +89,18 @@ const Page = () => {
     if (!isFetching) {
       fetchData();
     }
-  }, []);
+  }, [paginationStatus.current_elements]);
+
+  const onChangeCurrentElement = (e: number) => {
+    if (isFetching) return;
+
+    setPaginationStatus((prevState) => {
+      if (0 <= e - 1 && e - 1 < paginationStatus.total_pages) {
+        return { ...prevState, current_elements: e - 1 };
+      }
+      return { ...prevState };
+    });
+  };
 
   if (error) {
     return <ErrorPage title="에러 발생!" description={error.message} />;
@@ -120,9 +144,10 @@ const Page = () => {
     };
     updateData();
   };
+
   return (
     <>
-      <div className="p-4 m-12 bg-zinc-700 rounded-md shadow-lg">
+      <div className="p-8 m-12 bg-zinc-700 rounded-md shadow-lg">
         <div className="flex flex-row mb-4">
           <span className="text-2xl text-stone-200">유저 정보</span>
         </div>
@@ -197,11 +222,11 @@ const Page = () => {
           </button>
         </div>
       </div>
-      <div className="p-4 m-12 bg-zinc-700 rounded-md shadow-lg">
+      <div className="p-8 m-12 bg-zinc-700 rounded-md shadow-lg">
         <div className="flex flex-row mb-4">
           <span className="text-2xl text-stone-200">주문 내역</span>
         </div>
-        <div className="p-4 space-y-8">
+        <div className="py-4 space-y-8">
           {orderGroups ? (
             orderGroups.map((orderGroup) => (
               <ListingOrderGroup
@@ -214,6 +239,10 @@ const Page = () => {
             <div>구매내역 없음</div>
           )}
         </div>
+        <Pagination
+          pagination={paginationStatus}
+          onChangeCurrentElement={onChangeCurrentElement}
+        />
       </div>
     </>
   );
