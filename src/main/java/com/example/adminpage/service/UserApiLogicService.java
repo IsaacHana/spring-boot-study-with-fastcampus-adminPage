@@ -10,7 +10,7 @@ import com.example.adminpage.model.network.response.OrderDetailApiResponse;
 import com.example.adminpage.model.network.response.OrderGroupApiResponse;
 import com.example.adminpage.model.network.response.UserApiResponse;
 import com.example.adminpage.model.network.response.UserOrderInfoApiResponse;
-import com.example.adminpage.repository.UserRepository;
+import com.example.adminpage.repository.OrderGroupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,12 +25,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
-
-    private final UserRepository userRepository;
-
+    private final OrderGroupRepository orderGroupRepository;
     private final OrderGroupApiLogicService orderGroupApiLogicService;
     private final OrderDetailApiLogicService orderDetailApiLogicService;
-
     private final ItemApiLogicService itemApiLogicService;
 
     // 1. request data
@@ -134,31 +131,48 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         return Header.OK(userApiResponses, pagination);
     }
 
-    public Header<UserOrderInfoApiResponse> orderInfo(Long id) {
+    public Header<UserOrderInfoApiResponse> orderInfo(Long id, Pageable pageable) {
         // user
-        User user = userRepository.getReferenceById(id);
+        User user = baseRepository.getReferenceById(id);
         UserApiResponse userApiResponse = response(user);
+        log.info("user info : {}", user);
 
         // orderGroup
-        List<OrderGroup> orderGroups = user.getOrderGroups();
+        Page<OrderGroup> orderGroups = orderGroupRepository.findWithUserId(id, pageable);
+
+
+        Pagination pagination = Pagination.builder()
+                .totalPages(orderGroups.getTotalPages())
+                .totalElements(orderGroups.getTotalElements())
+                .currentElements(orderGroups.getNumber())
+                .currentPage(orderGroups.getNumberOfElements())
+                .currentSize(orderGroups.getSize())
+                .build();
+
+
         List<OrderGroupApiResponse> orderGroupApiResponses = orderGroups.stream()
                 .map(orderGroup -> {
                             OrderGroupApiResponse orderGroupApiResponse = orderGroupApiLogicService.response(orderGroup);
                             // orderDetail api response
                             List<OrderDetailApiResponse> orderDetailApiResponses = orderGroup.getOrderDetails().stream()
-                                    .map(orderDetail -> orderDetailApiLogicService.response(orderDetail)).toList();
+                                    .map(orderDetail -> {
+                                        OrderDetailApiResponse orderDetailApiResponse = orderDetailApiLogicService.response(orderDetail);
 
+                                        orderDetailApiResponse.setItemApiResponse(itemApiLogicService.response(orderDetail.getItem()));
+
+                                        return orderDetailApiResponse;
+                                    }).toList();
                             orderGroupApiResponse.setOrderDetailApiResponses(orderDetailApiResponses);
                             return orderGroupApiResponse;
                         }
                 ).toList();
-
+        log.info("order group info : {}", orderGroupApiResponses);
         userApiResponse.setOrderGroupApiResponses(orderGroupApiResponses);
 
         UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
                 .userOrderInfo(userApiResponse)
                 .build();
 
-        return Header.OK(userOrderInfoApiResponse);
+        return Header.OK(userOrderInfoApiResponse, pagination);
     }
 }
