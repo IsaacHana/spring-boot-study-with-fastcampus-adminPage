@@ -58,9 +58,10 @@ const Pagination: React.FC<PaginationProps> = ({
     return arr;
   };
 
+  if (pagination.total_pages <= 1) return <></>;
+
   return (
-    <div className="flex flex-row gap-x-3 my-2 justify-center align-middle text-stone-200 ">
-      <div></div>
+    <div className="flex flex-row gap-x-3 my-2 justify-center align-middle text-stone-200">
       <div className="flex flex-row gap-x-3">
         <div>
           <div
