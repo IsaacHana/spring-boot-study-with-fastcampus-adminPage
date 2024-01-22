@@ -1,3 +1,4 @@
+import { PaginationProps } from "../model/model";
 import SelectBox from "../ui/SelectBox";
 import Pagination from "./Pagination";
 import Table from "./Table";
@@ -12,7 +13,7 @@ interface TableViewProps {
   onChangePageSize: (value: number) => void;
   onChangeCurrentElement: (value: number) => void;
   data: any;
-  pagination: any;
+  pagination: PaginationProps;
   title: string;
   description: string;
   keys: string[];
