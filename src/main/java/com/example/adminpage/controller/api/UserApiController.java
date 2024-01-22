@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +25,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserApiController extends CrudController<UserApiRequest, UserApiResponse, User> {
-    
+
     private final UserApiLogicService userApiLogicService;
 
     @GetMapping("/{id}/orderInfo")
-    public Header<UserOrderInfoApiResponse> orderInfo(@PathVariable Long id) {
-        return userApiLogicService.orderInfo(id);
+    public Header<UserOrderInfoApiResponse> orderInfo(@PathVariable Long id,
+                                                      @PageableDefault(direction = Sort.Direction.DESC, size = 5)
+                                                      @SortDefault(sort = "orderAt")
+                                                      Pageable pageable
+    ) {
+        return userApiLogicService.orderInfo(id, pageable);
     }
 
     @GetMapping()
     public Header<List<UserApiResponse>> search(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        log.info("{}", pageable);
+//        log.info("{}", pageable);
         return userApiLogicService.search(pageable);
     }
 }
