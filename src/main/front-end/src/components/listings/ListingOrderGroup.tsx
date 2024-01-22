@@ -1,5 +1,6 @@
 import favicon from "../../assets/images/cant_find.png";
-import { OrderGroup, User } from "../../model/model";
+import { OrderGroup, PaginationProps, User } from "../../model/model";
+import Pagination from "../Pagination";
 
 interface ListingOrderGroupProps {
   data: OrderGroup;
@@ -15,11 +16,14 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
       <div className="flex flex-col p-8 bg-slate-700 rounded-md text-stone-200">
         <div className="flex">
           <span className="text-2xl text-stone-200">
-            {new Date(data.arrival_date).toLocaleDateString()} 주문
+            {new Date(data.order_at).toLocaleDateString()} 주문
           </span>
         </div>
         {data.order_detail_api_responses.map((orderDetail) => (
-          <div className="flex flex-row my-4 w-full flex-wrap">
+          <div
+            key={orderDetail.id}
+            className="flex flex-row my-4 w-full flex-wrap"
+          >
             <div className="flex flex-col flex-[3] p-4 rounded-l-lg border-black border">
               {orderDetail.item_api_response && (
                 <>
@@ -63,15 +67,8 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
             </div>
 
             <div className="flex flex-col flex-[1] flex-wrap justify-between p-4 rounded-r-lg border-black border ">
-              <div className="border border-black rounded-md p-2">
-                배송 조회
-              </div>
-              <div className="border border-black rounded-md p-2">
-                배송 조회
-              </div>
-              <div className="border border-black rounded-md p-2">
-                배송 조회
-              </div>
+              <div className="border border-black rounded-md p-2">수정</div>
+              <div className="border border-black rounded-md p-2">삭제</div>
             </div>
           </div>
         ))}
