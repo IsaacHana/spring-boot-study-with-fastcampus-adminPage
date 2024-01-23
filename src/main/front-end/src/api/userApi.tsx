@@ -36,3 +36,13 @@ export const updateUser = async (updatedData: FieldValues) => {
 
   return response.data;
 };
+
+export const deleteUser = async (id: number) => {
+  const response = await axios.delete(`${url}/${id}`);
+
+  if (response.status != 200) {
+    throw new Error(response.data?.description);
+  }
+
+  return response.data;
+};
