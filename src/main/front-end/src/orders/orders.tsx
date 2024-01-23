@@ -1,12 +1,12 @@
-import OrderGroupLayout from "./layout";
+import OrderGroupsLayout from "./layout";
 import Page from "./page";
 
-const OrderGroup = () => {
+const OrderGroups = () => {
   return (
-    <OrderGroupLayout>
+    <OrderGroupsLayout>
       <Page />
-    </OrderGroupLayout>
+    </OrderGroupsLayout>
   );
 };
 
-export default OrderGroup;
+export default OrderGroups;
