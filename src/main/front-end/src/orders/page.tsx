@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ErrorPage from "../components/ErrorPage";
 import TableView from "../components/TableView";
 import { OrderGroup, PaginationProps } from "../model/model";
-import { fetchOrderGroup } from "../api/orderGroupApi";
+import { fetchOrderGroups } from "../api/orderGroupApi";
 
 const Page = () => {
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const Page = () => {
     const fetchData = async () => {
       setIsFetching(true);
       try {
-        const { data, pagination } = await fetchOrderGroup(
+        const { data, pagination } = await fetchOrderGroups(
           paginationStatus.current_elements,
           paginationStatus.current_size
         );
