@@ -1,5 +1,5 @@
-const OrderGroupLayout = ({ children }: { children: React.ReactNode }) => {
+const OrderGroupsLayout = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-export default OrderGroupLayout;
+export default OrderGroupsLayout;
