@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ErrorPage from "../components/ErrorPage";
 import TableView from "../components/TableView";
 import { PaginationProps, Partner } from "../model/model";
-import { fetchPartner } from "../api/partnerAPi";
+import { fetchPartners } from "../api/partnerApi";
 
 const Page = () => {
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const Page = () => {
     const fetchData = async () => {
       setIsFetching(true);
       try {
-        const { data, pagination } = await fetchPartner(
+        const { data, pagination } = await fetchPartners(
           paginationStatus.current_elements,
           paginationStatus.current_size
         );
