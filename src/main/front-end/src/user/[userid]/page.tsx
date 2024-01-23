@@ -103,26 +103,6 @@ const Page = () => {
     });
   };
 
-  if (error) {
-    return <ErrorPage title="에러 발생!" description={error.message} />;
-  }
-
-  if (isFetching) {
-    return (
-      <>
-        <Loader />
-      </>
-    );
-  }
-
-  if (!user) {
-    return (
-      <>
-        <div>데이터 없음</div>
-      </>
-    );
-  }
-
   const onSubmit: SubmitHandler<FieldValues> = (updatedData) => {
     const updateData = async () => {
       setIsFetching(true);
@@ -154,7 +134,7 @@ const Page = () => {
         deleteUser(id);
 
         navigate("/user");
-        
+
         setIsFetching(false);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -168,6 +148,26 @@ const Page = () => {
     };
     deleteData();
   };
+
+  if (error) {
+    return <ErrorPage title="에러 발생!" description={error.message} />;
+  }
+
+  if (isFetching) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
+
+  if (!user) {
+    return (
+      <>
+        <div>데이터 없음</div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -220,7 +220,7 @@ const Page = () => {
           <Input
             id="registered_at"
             label="등록일"
-            disabled={isFetching}
+            disabled={true}
             register={register}
             errors={errors}
             required
@@ -229,7 +229,7 @@ const Page = () => {
             <Input
               id="unregistered_at"
               label="해지일"
-              disabled={isFetching}
+              disabled={true}
               register={register}
               errors={errors}
               required
