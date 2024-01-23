@@ -25,9 +25,10 @@ export interface Item {
 
 export interface Partner {
   id: number;
+  status: string;
   name: string;
   address: string;
-  call_number: string;
+  call_center: string;
   partner_number: string;
   business_number: string;
   ceo_name: string;
@@ -47,7 +48,8 @@ export interface OrderGroup {
   total_quantity: number;
   order_at: string;
   arrival_date: string;
-  order_detail_api_responses: OrderDetail[];
+  user_id: number;
+  order_detail_api_responses?: OrderDetail[];
 }
 
 export interface OrderDetail {
