@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 
 import { OrderGroup, PaginationProps, User } from "../../model/model";
 import ErrorPage from "../../components/ErrorPage";
-import { fetchUser, updateUser } from "../../api/userApi";
-import { useParams } from "react-router-dom";
+import { deleteUser, fetchUser, updateUser } from "../../api/userApi";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Input from "../../ui/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ import Pagination from "../../components/Pagination";
 
 const Page = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
@@ -145,6 +146,29 @@ const Page = () => {
     updateData();
   };
 
+  const onDelete = (id: number) => {
+    const deleteData = async () => {
+      setIsFetching(true);
+
+      try {
+        deleteUser(id);
+
+        navigate("/user");
+        
+        setIsFetching(false);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.log(error);
+          setError({
+            ...error,
+            message: error.message || "Could not delete user",
+          });
+        }
+      }
+    };
+    deleteData();
+  };
+
   return (
     <>
       <div className="p-8 m-12 bg-zinc-700 rounded-md shadow-lg">
@@ -213,12 +237,18 @@ const Page = () => {
           )}
         </div>
 
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4 gap-4">
           <button
-            className="bg-lime-600 text-stone-200 w-[60px] h-[40px] rounded-lg"
+            className="bg-green-700 text-stone-200 w-[60px] h-[40px] rounded-lg"
             onClick={handleSubmit(onSubmit)}
           >
             수정
+          </button>
+          <button
+            className="bg-red-700 text-stone-200 w-[60px] h-[40px] rounded-lg"
+            onClick={() => onDelete(user.id)}
+          >
+            삭제
           </button>
         </div>
       </div>
