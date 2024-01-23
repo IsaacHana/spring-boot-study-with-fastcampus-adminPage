@@ -24,7 +24,7 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
             key={orderDetail.id}
             className="flex flex-row my-4 w-full flex-wrap"
           >
-            <div className="flex flex-col flex-[3] p-4 rounded-l-lg border-black border">
+            <div className="flex flex-col flex-[3] p-4 rounded-l-lg border border-stone-200 border-opacity-30">
               {orderDetail.item_api_response && (
                 <>
                   <div className="flex flex-row">
@@ -32,7 +32,7 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
                       {orderDetail.status}
                     </span>
                     {orderDetail.status !== "ORDERING" && (
-                      <span className="font-light text-xl text-indigo-400">
+                      <span className="font-light text-xl text-indigo-200">
                         {new Date(
                           orderDetail.arrival_date
                         ).toLocaleDateString()}
@@ -66,9 +66,9 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
               )}
             </div>
 
-            <div className="flex flex-col flex-[1] flex-wrap justify-between p-4 rounded-r-lg border-black border ">
-              <div className="border border-black rounded-md p-2">수정</div>
-              <div className="border border-black rounded-md p-2">삭제</div>
+            <div className="flex flex-col flex-[1] flex-wrap justify-between p-4 rounded-r-lg border border-stone-200 border-opacity-30">
+              <div className="border border-stone-200 rounded-md p-2">수정</div>
+              <div className="border border-stone-200 rounded-md p-2">삭제</div>
             </div>
           </div>
         ))}
