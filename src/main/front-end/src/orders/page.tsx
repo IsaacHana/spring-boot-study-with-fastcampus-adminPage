@@ -33,7 +33,7 @@ const Page = () => {
     if (isFetching) return;
 
     setPagination((prevState) => {
-      return { ...prevState, current_size: e };
+      return { ...prevState, current_elements: 0, current_size: e };
     });
   };
 
