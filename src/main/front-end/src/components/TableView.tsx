@@ -34,7 +34,7 @@ const TableView: React.FC<TableViewProps> = ({
 }) => {
   return (
     <>
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col p-8">
         <div className="flex flex-row mb-4 justify-between">
           <div className="flex flex-row align-middle gap-4 mb-2">
             <div className="text-xl text-white">{title}</div>
