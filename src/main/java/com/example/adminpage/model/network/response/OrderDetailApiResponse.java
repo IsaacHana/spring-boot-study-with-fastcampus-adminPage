@@ -1,5 +1,6 @@
 package com.example.adminpage.model.network.response;
 
+import com.example.adminpage.model.enumclass.OrderDetailType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class OrderDetailApiResponse {
     private Long id;
 
-    private String status;
+    private OrderDetailType status;
 
     private LocalDateTime arrivalDate;
 
