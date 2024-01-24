@@ -6,7 +6,9 @@ import com.example.adminpage.model.entity.Item;
 import com.example.adminpage.model.entity.OrderDetail;
 import com.example.adminpage.model.entity.OrderGroup;
 import com.example.adminpage.model.entity.User;
+import com.example.adminpage.model.enumclass.OrderDetailType;
 import com.example.adminpage.model.enumclass.OrderType;
+import com.example.adminpage.model.enumclass.PaymentType;
 import com.example.adminpage.repository.ItemRepository;
 import com.example.adminpage.repository.OrderDetailRepository;
 import com.example.adminpage.repository.OrderGroupRepository;
@@ -55,12 +57,10 @@ public class OrderDetailSample {
         for (int j = 0; j < 1; j++) {
             User user = userList.get(j);
             item(user);
-
         }
 
 
         userList.forEach(user -> {
-
             int orderCount = random.nextInt(10) + 1;
             for (int i = 0; i < orderCount; i++) {
                 item(user);
@@ -75,49 +75,34 @@ public class OrderDetailSample {
         double totalAmount = 0;
 
         List<Item> items = new ArrayList<>();
+        List<Integer> quantityList = new ArrayList<>();
         List<OrderDetail> orderHistoryDetails = new ArrayList<>();
 
-
         int itemCount = random.nextInt(10) + 1;
+
         for (int i = 0; i < itemCount; i++) {
             // db에 아이템 갯수가 총 500개 ( * 자신의 샘플에 맞추세요 )
             int itemNumber = random.nextInt(405) + 1;
+            int quantity = random.nextInt(10) + 1;
 
             Item item = itemRepository.findById((long) itemNumber).get();
-            totalAmount += item.getPrice().doubleValue();
+            totalAmount += item.getPrice().doubleValue() * quantity;
             items.add(item);
+            quantityList.add(quantity);
         }
 
-
-        int s = random.nextInt(3) + 1;
-        String status = "ORDERING";
-        String paymentType = "BANK_TRANSFER";
-        switch (s) {
-            case 1:
-                status = "ORDERING";
-                paymentType = "BANK_TRANSFER";
-                break;
-
-            case 2:
-                status = "COMPLETE";
-                paymentType = "CARD";
-                break;
-
-            case 3:
-                status = "CONFIRM";
-                paymentType = "CHECK_CARD";
-                break;
-        }
+        OrderDetailType status = OrderDetailType.randomOrderDetailType();
+        PaymentType paymentType = PaymentType.randomType();
 
         int t = random.nextInt(2) + 1;
         OrderType type = t == 1 ? OrderType.ALL : OrderType.EACH;
 
-
+        String[] address = {"경기도 분당구 판교역로", "경기도 안산시 선부광장북로", "서울시 마포구 합정", "경기도 일산", "서울시 강남구"};
         OrderGroup orderGroup = OrderGroup.builder()
                 .user(user)
                 .status(status)
                 .orderType(type)
-                .revAddress("경기도 분당구 판교역로")
+                .revAddress(address[random.nextInt(address.length)])
                 .revName(user.getEmail())
                 .paymentType(paymentType)
                 .totalPrice(BigDecimal.valueOf(totalAmount))
@@ -130,30 +115,21 @@ public class OrderDetailSample {
         orderGroupRepository.save(orderGroup);
 
 
-        for (Item item : items) {
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            Integer quantity = quantityList.get(i);
 
-            String orderDetailStatus = "ORDERING";
-            switch (random.nextInt(3) + 1) {
-                case 1:
-                    orderDetailStatus = "ORDERING";
-                    break;
-
-                case 2:
-                    orderDetailStatus = "COMPLETE";
-                    break;
-
-                case 3:
-                    orderDetailStatus = "CONFIRM";
-                    break;
-            }
-
+            OrderDetailType orderDetailStatus = OrderDetailType.randomOrderDetailType();
 
             OrderDetail orderDetail = OrderDetail.builder()
                     .orderGroup(orderGroup)
                     .item(item)
+                    .quantity(quantity)
+                    .totalPrice(BigDecimal.valueOf(item.getPrice().doubleValue() * quantity))
                     .arrivalDate(type.equals(OrderType.ALL) ? orderGroup.getArrivalDate() : getRandomDate())
                     .status(type.equals(OrderType.ALL) ? status : orderDetailStatus)
                     .build();
+
             orderDetailRepository.save(orderDetail);
             orderHistoryDetails.add(orderDetail);
         }
