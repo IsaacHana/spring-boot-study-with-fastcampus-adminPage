@@ -1,6 +1,8 @@
 package com.example.adminpage.model.entity;
 
+import com.example.adminpage.model.enumclass.OrderDetailType;
 import com.example.adminpage.model.enumclass.OrderType;
+import com.example.adminpage.model.enumclass.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -27,7 +29,8 @@ public class OrderGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderDetailType status;
 
     @Enumerated(EnumType.STRING)
     private OrderType orderType; // 주문의 형태 - 일괄 / 개별
@@ -36,7 +39,8 @@ public class OrderGroup {
 
     private String revName;
 
-    private String paymentType;
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
     private BigDecimal totalPrice;
 
