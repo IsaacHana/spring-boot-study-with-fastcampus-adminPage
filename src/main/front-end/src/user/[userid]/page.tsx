@@ -171,7 +171,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="p-8 m-12 bg-zinc-700 rounded-md shadow-lg">
+      <div className="p-8 bg-zinc-700 rounded-md shadow-lg">
         <div className="flex flex-row mb-4">
           <span className="text-2xl text-stone-200">유저 정보</span>
         </div>
@@ -252,7 +252,8 @@ const Page = () => {
           </button>
         </div>
       </div>
-      <div className="p-8 m-12 bg-zinc-700 rounded-md shadow-lg">
+
+      <div className="p-8 mt-8 bg-zinc-700 rounded-md shadow-lg">
         <div className="flex flex-row mb-4">
           <span className="text-2xl text-stone-200">주문 내역</span>
         </div>
