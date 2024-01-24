@@ -2,7 +2,9 @@ package com.example.adminpage.repository;
 
 import com.example.adminpage.AdminPageApplicationTests;
 import com.example.adminpage.model.entity.OrderGroup;
+import com.example.adminpage.model.enumclass.OrderDetailType;
 import com.example.adminpage.model.enumclass.OrderType;
+import com.example.adminpage.model.enumclass.PaymentType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,11 @@ public class OrderGroupRepositoryTest extends AdminPageApplicationTests {
     @Test
     void create() {
         OrderGroup orderGroup = new OrderGroup();
-        orderGroup.setStatus("COMPLETE");
+        orderGroup.setStatus(OrderDetailType.COMPLETE);
         orderGroup.setOrderType(OrderType.ALL);
         orderGroup.setRevAddress("경기도 안산시 단원구");
         orderGroup.setRevName("홍길동");
-        orderGroup.setPaymentType("CARD");
+        orderGroup.setPaymentType(PaymentType.CARD);
         orderGroup.setTotalPrice(BigDecimal.valueOf(900_000));
         orderGroup.setTotalQuantity(1);
         orderGroup.setOrderAt(LocalDateTime.now().minusDays(2));

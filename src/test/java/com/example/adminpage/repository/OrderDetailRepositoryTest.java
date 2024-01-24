@@ -2,6 +2,7 @@ package com.example.adminpage.repository;
 
 import com.example.adminpage.AdminPageApplicationTests;
 import com.example.adminpage.model.entity.OrderDetail;
+import com.example.adminpage.model.enumclass.OrderDetailType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class OrderDetailRepositoryTest extends AdminPageApplicationTests {
     public void create() {
         OrderDetail orderDetail = new OrderDetail();
 
-        orderDetail.setStatus("WAITING");
+        orderDetail.setStatus(OrderDetailType.ORDERING);
         orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
         orderDetail.setQuantity(1);
         orderDetail.setTotalPrice(BigDecimal.valueOf(900_000)); // double 보단 BigDecimal 이 깔끔, 값의 엄청난 정확도가 요구 되는 것이 아니라면..
