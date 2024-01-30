@@ -166,7 +166,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                             return orderGroupApiResponse;
                         }
                 ).toList();
-        log.info("order group info : {}", orderGroupApiResponses);
+
         userApiResponse.setOrderGroupApiResponses(orderGroupApiResponses);
 
         UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
