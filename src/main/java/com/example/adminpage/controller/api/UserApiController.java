@@ -30,8 +30,8 @@ public class UserApiController extends CrudController<UserApiRequest, UserApiRes
 
     @GetMapping("/{id}/orderInfo")
     public Header<UserOrderInfoApiResponse> orderInfo(@PathVariable Long id,
-                                                      @PageableDefault(direction = Sort.Direction.DESC, size = 5)
-                                                      @SortDefault(sort = "orderAt")
+                                                      @PageableDefault(size = 5)
+                                                      @SortDefault(sort = "orderAt", direction = Sort.Direction.DESC)
                                                       Pageable pageable
     ) {
         return userApiLogicService.orderInfo(id, pageable);
