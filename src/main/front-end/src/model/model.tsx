@@ -18,6 +18,7 @@ export interface Item {
   content: string;
   price: number;
   brand_name: string;
+  thumbnail: string;
   registered_at: string;
   unregistered_at: string | null;
   partner_id: number;
