@@ -1,6 +1,6 @@
 import favicon from "../../assets/images/cant_find.png";
-import { OrderGroup, PaginationProps, User } from "../../model/model";
-import Pagination from "../Pagination";
+import { OrderGroup, User } from "../../model/model";
+import { useNavigate } from "react-router-dom";
 
 interface ListingOrderGroupProps {
   data: OrderGroup;
@@ -11,6 +11,7 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
   data,
   user,
 }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col p-8 bg-slate-700 rounded-md text-stone-200">
@@ -42,7 +43,10 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
                     </div>
                     <div className="flex flex-col pt-4 md:flex-row">
                       <img
-                        src={favicon}
+                        src={
+                          require(`../../assets/images/${orderDetail.item_api_response.thumbnail}.png`) ||
+                          favicon
+                        }
                         className="border rounded-lg object-cover h-40 w-60 mr-4"
                       />
                       <div
@@ -50,16 +54,20 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
                         className="flex gap-4"
                       >
                         <div className="flex flex-col text-start">
-                          <p className="text-2xl">
+                          <p className="text-xl">
                             {`${orderDetail.item_api_response.title}, ${orderDetail.item_api_response.name}`}
                           </p>
 
-                          <p className="text-xl">
-                            {`${orderDetail.item_api_response.price} 원 · ${
+                          <p className="text-xl font-thin">
+                            {`${Number(
+                              orderDetail.item_api_response.price
+                            ).toLocaleString()} 원 · ${
                               orderDetail.quantity || 0
                             } 개`}
                           </p>
-                          <p className="text-xl">{`총 ${orderDetail.total_price} 원`}</p>
+                          <p className="text-xl">{`총 ${Number(
+                            orderDetail.total_price
+                          ).toLocaleString()} 원`}</p>
                         </div>
                       </div>
                     </div>
@@ -68,7 +76,10 @@ const ListingOrderGroup: React.FC<ListingOrderGroupProps> = ({
               </div>
 
               <div className="flex flex-col flex-[1] flex-wrap justify-between p-4 rounded-r-lg border border-stone-200 border-opacity-30">
-                <div className="border border-stone-200 rounded-md p-2">
+                <div
+                  className="border border-stone-200 rounded-md p-2"
+                  onClick={() => navigate(`/order-detail/${orderDetail.id}`)}
+                >
                   수정
                 </div>
                 <div className="border border-stone-200 rounded-md p-2">
