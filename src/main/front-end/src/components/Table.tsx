@@ -37,7 +37,9 @@ const Table: TableComponentI = ({ data, keys, tableHeads }) => {
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:opacity-80 transition-all hover:text-stone-200"
                   >
                     {keys.map((key) => (
-                      <td className="text-middle px-6 py-4">{d[key]}</td>
+                      <td className="text-middle px-6 py-4" key={key}>
+                        {d[key]}
+                      </td>
                     ))}
                   </tr>
                 ))}
