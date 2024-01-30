@@ -82,7 +82,7 @@ public class OrderDetailSample {
 
         for (int i = 0; i < itemCount; i++) {
             // db에 아이템 갯수가 총 500개 ( * 자신의 샘플에 맞추세요 )
-            int itemNumber = random.nextInt(405) + 1;
+            int itemNumber = random.nextInt(270) + 1;
             int quantity = random.nextInt(10) + 1;
 
             Item item = itemRepository.findById((long) itemNumber).get();
@@ -139,7 +139,7 @@ public class OrderDetailSample {
 
 
     private LocalDateTime getRandomDate() {
-        return LocalDateTime.of(2019, getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber());
+        return LocalDateTime.of(2023, getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber());
     }
 
     private int getRandomNumber() {
