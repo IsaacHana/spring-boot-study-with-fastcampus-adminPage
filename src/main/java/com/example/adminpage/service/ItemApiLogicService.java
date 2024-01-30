@@ -106,6 +106,7 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .content(item.getContent())
                 .price(item.getPrice())
                 .brandName(item.getBrandName())
+                .thumbnail(item.getThumbnail())
                 .registeredAt(item.getRegisteredAt())
                 .unregisteredAt(item.getUnregisteredAt())
                 .partnerId(item.getPartnerCompany().getId())

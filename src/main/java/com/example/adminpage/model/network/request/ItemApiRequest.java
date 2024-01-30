@@ -29,6 +29,8 @@ public class ItemApiRequest {
 
     private String brandName;
 
+    private String thumbnail;
+
     private LocalDateTime registeredAt;
 
     private LocalDateTime unregisteredAt;

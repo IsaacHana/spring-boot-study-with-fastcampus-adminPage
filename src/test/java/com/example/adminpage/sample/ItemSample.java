@@ -5,6 +5,7 @@ import com.example.adminpage.config.JpaConfig;
 import com.example.adminpage.model.entity.Category;
 import com.example.adminpage.model.entity.Item;
 import com.example.adminpage.model.entity.PartnerCompany;
+import com.example.adminpage.model.enumclass.CategoryType;
 import com.example.adminpage.model.enumclass.ItemStatus;
 import com.example.adminpage.repository.CategoryRepository;
 import com.example.adminpage.repository.ItemRepository;
@@ -45,19 +46,16 @@ public class ItemSample {
     public void createAll() {
         createHomeAppliance();
         createClothing();
-        createMultiShop();
         createInterior();
         createFood();
         createSports();
-        createShoppingMall();
-        createDutyFree();
         createBeauty();
     }
 
 
     @Test
     public void createHomeAppliance() {
-        String type = "COMPUTER";
+        CategoryType type = CategoryType.COMPUTER;
         Category category = categoryRepository.findByType(type).get();
         List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
 
@@ -72,9 +70,10 @@ public class ItemSample {
                         .status(status)
                         .name(category.getTitle() + i + "호")
                         .title(p.getName() + "의 가전제품" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
-                        .content(p.getName() + "의 가전제품" + i + "호" + "의 가전제품 입니다. 2019년도 신제품 입니다")
+                        .price(BigDecimal.valueOf((long) random.nextInt(9999) * 100 + 100))
+                        .content(p.getName() + "의 가전제품" + i + "호" + "의 가전제품 입니다. 2023년도 신제품 입니다")
                         .brandName(p.getName())
+                        .thumbnail(type.getFilePrefix() + i)
                         .registeredAt(getRandomDate())
                         .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
                         .build();
@@ -87,7 +86,7 @@ public class ItemSample {
     @Test
     public void createClothing() {
 
-        String type = "CLOTHING";
+        CategoryType type = CategoryType.CLOTHES;
         Category category = categoryRepository.findByType(type).get();
         List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
 
@@ -102,39 +101,10 @@ public class ItemSample {
                         .status(status)
                         .name(category.getTitle() + i + "호")
                         .title(p.getName() + "의 의류제품" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
-                        .content(p.getName() + "의 의류제품" + i + "호" + "의 겨울 상품 입니다. 2029년도 신제품 입니다")
+                        .price(BigDecimal.valueOf((long) random.nextInt(999) * 100 + 100))
+                        .content(p.getName() + "의 의류제품" + i + "호" + "의 겨울 상품 입니다. 2023년도 신제품 입니다")
                         .brandName(p.getName())
-                        .registeredAt(getRandomDate())
-                        .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
-                        .build();
-                itemRepository.save(item);
-            }
-        }
-    }
-
-
-    @Test
-    public void createMultiShop() {
-
-        String type = "MULTI_SHOP";
-        Category category = categoryRepository.findByType(type).get();
-        List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
-
-        for (PartnerCompany p : partnerList) {
-
-            for (int i = 1; i < 6; i++) {
-                int div = (random.nextInt(10) + 1) % 2;
-                ItemStatus status = (div == 0 ? ItemStatus.REGISTERED : ItemStatus.UNREGISTERED);
-
-                Item item = Item.builder()
-                        .partnerCompany(p)
-                        .status(status)
-                        .name(category.getTitle() + i + "호")
-                        .title(p.getName() + "의 XX 제품" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
-                        .content(p.getName() + "의 XX 제품" + i + "호" + "의 여러가지 상품 입니다. 2021년도 신제품 입니다")
-                        .brandName(p.getName())
+                        .thumbnail(type.getFilePrefix() + i)
                         .registeredAt(getRandomDate())
                         .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
                         .build();
@@ -146,7 +116,7 @@ public class ItemSample {
     @Test
     public void createInterior() {
 
-        String type = "INTERIOR";
+        CategoryType type = CategoryType.HOME_DECORATION;
         Category category = categoryRepository.findByType(type).get();
         List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
 
@@ -161,9 +131,10 @@ public class ItemSample {
                         .status(status)
                         .name(category.getTitle() + i + "호")
                         .title(p.getName() + "의 가구" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
+                        .price(BigDecimal.valueOf((long) random.nextInt(999) * 100 + 100))
                         .content(p.getName() + "의 가구" + i + "호" + "의 원룸에 들어가는. 2023년도 신제품 입니다")
                         .brandName(p.getName())
+                        .thumbnail(type.getFilePrefix() + i)
                         .registeredAt(getRandomDate())
                         .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
                         .build();
@@ -175,7 +146,7 @@ public class ItemSample {
     @Test
     public void createFood() {
 
-        String type = "FOOD";
+        CategoryType type = CategoryType.FOOD;
         Category category = categoryRepository.findByType(type).get();
         List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
 
@@ -189,10 +160,11 @@ public class ItemSample {
                         .partnerCompany(p)
                         .status(status)
                         .name(category.getTitle() + i + "호")
-                        .title(p.getName() + "의 제빵" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
-                        .content(p.getName() + "의 제빵" + i + "호" + "의 생일 케이크 입니다")
+                        .title(p.getName() + "의 식당" + i + "호")
+                        .price(BigDecimal.valueOf((long) random.nextInt(99) * 100 + 100))
+                        .content(p.getName() + "의 식당" + i + "호" + "의 음식 입니다")
                         .brandName(p.getName())
+                        .thumbnail(type.getFilePrefix() + i)
                         .registeredAt(getRandomDate())
                         .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
                         .build();
@@ -204,7 +176,7 @@ public class ItemSample {
     @Test
     public void createSports() {
 
-        String type = "SPORTS";
+        CategoryType type = CategoryType.SPORTS;
         Category category = categoryRepository.findByType(type).get();
         List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
 
@@ -219,9 +191,10 @@ public class ItemSample {
                         .status(status)
                         .name(category.getTitle() + i + "호")
                         .title(p.getName() + "의 겨울 스포츠" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
+                        .price(BigDecimal.valueOf((long) random.nextInt(999) * 100 + 100))
                         .content(p.getName() + "의 겨울 스포츠" + i + "호" + "의 스키 상품 입니다")
                         .brandName(p.getName())
+                        .thumbnail(type.getFilePrefix() + i)
                         .registeredAt(getRandomDate())
                         .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
                         .build();
@@ -229,71 +202,11 @@ public class ItemSample {
             }
         }
     }
-
-    @Test
-    public void createShoppingMall() {
-
-        String type = "SHOPPING_MALL";
-        Category category = categoryRepository.findByType(type).get();
-        List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
-
-        for (PartnerCompany p : partnerList) {
-
-            for (int i = 1; i < 6; i++) {
-                int div = (random.nextInt(10) + 1) % 2;
-                ItemStatus status = (div == 0 ? ItemStatus.REGISTERED : ItemStatus.UNREGISTERED);
-
-                Item item = Item.builder()
-                        .partnerCompany(p)
-                        .status(status)
-                        .name(category.getTitle() + i + "호")
-                        .title(p.getName() + "의 OO 상품" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
-                        .content(p.getName() + "의 OO상품" + i + "호" + "의 EE 상품 입니다")
-                        .brandName(p.getName())
-                        .registeredAt(getRandomDate())
-                        .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
-                        .build();
-                itemRepository.save(item);
-            }
-        }
-    }
-
-
-    @Test
-    public void createDutyFree() {
-
-        String type = "DUTY_FREE";
-        Category category = categoryRepository.findByType(type).get();
-        List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
-
-        for (PartnerCompany p : partnerList) {
-
-            for (int i = 1; i < 6; i++) {
-                int div = (random.nextInt(10) + 1) % 2;
-                ItemStatus status = (div == 0 ? ItemStatus.REGISTERED : ItemStatus.UNREGISTERED);
-
-                Item item = Item.builder()
-                        .partnerCompany(p)
-                        .status(status)
-                        .name(category.getTitle() + i + "호")
-                        .title(p.getName() + "의 면세상품" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(999999) + 1))
-                        .content(p.getName() + "의 면세상품" + i + "호" + "의 면세 상품 입니다")
-                        .brandName(p.getName())
-                        .registeredAt(getRandomDate())
-                        .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
-                        .build();
-                itemRepository.save(item);
-            }
-        }
-    }
-
 
     @Test
     public void createBeauty() {
 
-        String type = "BEAUTY";
+        CategoryType type = CategoryType.COSMETICS;
         Category category = categoryRepository.findByType(type).get();
         List<PartnerCompany> partnerList = partnerRepository.findByCategory(category);
 
@@ -308,9 +221,10 @@ public class ItemSample {
                         .status(status)
                         .name(category.getTitle() + i + "호")
                         .title(p.getName() + "의 OO 화장품" + i + "호")
-                        .price(BigDecimal.valueOf((long) random.nextInt(99999) + 1))
+                        .price(BigDecimal.valueOf((long) random.nextInt(999) * 100 + 100))
                         .content(p.getName() + "의 OO 화장품" + i + "호" + "의 상품 입니다")
                         .brandName(p.getName())
+                        .thumbnail(type.getFilePrefix() + i)
                         .registeredAt(getRandomDate())
                         .unregisteredAt(status.equals(ItemStatus.UNREGISTERED) ? getRandomDate() : null)
                         .build();
@@ -320,7 +234,7 @@ public class ItemSample {
     }
 
     private LocalDateTime getRandomDate() {
-        return LocalDateTime.of(2019, getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber());
+        return LocalDateTime.of(2023, getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber());
     }
 
     private int getRandomNumber() {
