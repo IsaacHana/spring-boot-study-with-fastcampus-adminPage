@@ -16,6 +16,7 @@ import Partner from "./partners/[partnerId]/partner";
 
 import OrderGroups from "./orders/orders";
 import OrderGroup from "./orders/[orderId]/order";
+import OrderDetail from "./orderDetail/orderDetail";
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
 
           <Route path="/order-group" element={<OrderGroups />} />
           <Route path="/order-group/:id" element={<OrderGroup />} />
+
+          <Route path="/order-detail/:id" element={<OrderDetail />} />
 
           <Route path="/partner" element={<Partners />} />
           <Route path="/partner/:id" element={<Partner />} />
