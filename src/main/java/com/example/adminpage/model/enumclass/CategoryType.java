@@ -6,13 +6,14 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum CategoryType {
-    FOOD(0, "식품"),
-    HOME_DECORATION(1, "홈인테리어"),
-    SPORTS(2, "스포츠/레저"),
-    BOOK(3, "도서/음반/DVD"),
-    HOBBY(4, "완구/취미"),
-    HEALTH(5, "헬스/건상식품");
+    FOOD(0, "식품", "food"),
+    HOME_DECORATION(1, "홈 인테리어", "home"),
+    SPORTS(2, "스포츠/레저", "sport"),
+    CLOTHES(3, "의류", "clothes"),
+    COMPUTER(4, "컴퓨터/가전", "computer"),
+    COSMETICS(5, "화장품", "cosmetic");
 
     private final Integer id;
     private final String name;
+    private final String filePrefix;
 }

@@ -1,5 +1,6 @@
 package com.example.adminpage.model.entity;
 
+import com.example.adminpage.model.enumclass.CategoryType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -25,7 +26,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private CategoryType type;
 
     private String title;
 
