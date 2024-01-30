@@ -1,5 +1,4 @@
 import {
-  FieldError,
   FieldErrors,
   FieldValues,
   UseFormRegister,
@@ -19,20 +18,23 @@ interface InputProps {
 
 const Input: React.FC<InputProps> = ({
   id,
-  errors,
   label,
   register,
+  errors,
+  type = "text",
   disabled,
   required,
   pattern,
-  type = "text",
 }) => {
   return (
     <div className="w-full relative">
       <input
         id={id}
         disabled={disabled}
-        {...register(id, { required, pattern })}
+        {...register(id, {
+          required,
+          pattern,
+        })}
         placeholder=" "
         type={type}
         className={`
