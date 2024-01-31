@@ -2,10 +2,19 @@
 
 ## Admin Page 만들기
 
+![img_5.png](img_5.png)
 ![img_2.png](img_2.png)
 ![img.png](img.png)
 ![img_1.png](img_1.png)
 ![img_3.png](img_3.png)
+
+#### Spring Data JPA
+
+![img_4.png](img_4.png)
+
+#### 연관관계 설정
+
+![img_6.png](img_6.png)
 
 ### 배운점
 
@@ -20,6 +29,7 @@
 - Jpa 사용법
 - mysql worch bench를 통한 table 작성법
 - 기초적인 query 공부
+- Pagination
 - N + 1 문제  
   1개의 쿼리를 조회하는데 연관 관계가 설정된 다른 객체의 데이터를 N번 더 호출하게 되는 문제이다.  
   원인 : N + 1 문제란 JPA의 쿼리 기본 생성 때문에 발생 하는 문제이다.  
@@ -39,14 +49,13 @@
   pagination이 필요없고 성능향상이 필요한 부분에서 fetch join을 하는 것이 적절해 보인다.
 
 
-- front end 를 react를 이용하여 만들어 보았다.
-
+- front end는 react와 typescript를 이용하여 만들어 보았다.
 
 - useState를 통한 상태 관리
 - useRef로 특정(id) Dom 선택
 - useEffect를 이용한 마운트/언마운트/업데이트 설정
 - useMemo를 이용한 값 재사용 (react-hook-form)과 함께
-- route 관리
+- dom route 관리
 
 ### 느끼점
 
@@ -55,3 +64,9 @@
 문제를 해결하는 방법을 조금이나마 깨우친거 같았다.
 
 또한 가장 중요한것은 앞으로도 더 멋진 프로젝트를 만들 수 있을 거같은 자신감이 생겼다.
+
+### 아쉬운점
+
+아직은 나에게 강의를 보며 이해하면서 기술을 적용하는 것의 난이도가 있었다.  
+때문에 다양한 기술들을 사용해 보지 못했지만 차근차근 익숙해지면서 더 많은 기술들을 적용시켜보고 싶다.
+
